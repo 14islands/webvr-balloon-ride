@@ -15,7 +15,7 @@ export default class World {
 
   load () {
     this.loader.load(
-      '../../../assets/models/island/skyisland3.json',
+      'assets/models/island/skyisland3.json',
       ( island ) => {
         this.scene.add(island)
         for (let i = 0; i < island.children.length; i++) {
@@ -26,7 +26,7 @@ export default class World {
       }
     )
     this.loader.load(
-      '../../../assets/models/windmill/mill2.json',
+      'assets/models/windmill/mill2.json',
       ( windmill ) => {
         windmill.position.set(-5.5, 0, -4.8)
         this.scene.add(windmill)
@@ -38,7 +38,7 @@ export default class World {
       }
     )
     this.loader.load(
-      '../../../assets/models/windmill/wings.json',
+      'assets/models/windmill/wings.json',
       ( wings ) => {
         this.wings = wings
         this.wings.position.set(-5.5, 0, -4.8)

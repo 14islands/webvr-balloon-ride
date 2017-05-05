@@ -17,7 +17,7 @@ export default class Flamingo {
 
   load () {
     this.loader.load(
-      '../../../assets/models/flamingo/flamingo.js',
+      'assets/models/flamingo/flamingo.js',
       (geometry, materials) => {
         this.mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({
           vertexColors: THREE.FaceColors,

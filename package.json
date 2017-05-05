@@ -7,13 +7,21 @@
     "start": "npm-run-all --parallel watch browser-sync",
     "modernizr": "modernizr -c modernizr-config.json -d build/ -u",
     "browser-sync": "browser-sync start --server --logLevel info --files 'build/**/*' '**/*.html' --port 3030",
+    "copy:three": "cp ./node_modules/three/build/three.js ./build/",
+    "copy:webvr-polyfill": "cp ./node_modules/webvr-polyfill/build/webvr-polyfill.js ./build/",
+    "copy:webvr-manager": "cp node_modules/webvr-boilerplate/build/webvr-manager.js ./build/",
+    "copy:OrbitControls": "cp node_modules/three/examples/js/controls/OrbitControls.js ./build/",
+    "copy:Detector": "cp node_modules/three/examples/js/Detector.js ./build/",
+    "copy:stats": "cp node_modules/three/examples/js/libs/stats.min.js ./build/",
     "build:css-prod": "stylus --include-css -c -u autoprefixer-stylus src/css/main.styl -o build/bundle.min.css",
     "build:js-prod": "browserify src/js/main.js -t babelify -g uglifyify | uglifyjs -c > build/bundle.min.js",
     "build": "npm run build:css-prod -s && npm run build:js-prod -s",
     "watch:js": "watchify src/js/main.js -d -t babelify -o build/bundle.min.js",
     "watch:css": "stylus -w --include-css -m -u autoprefixer-stylus src/css/main.styl -o build/bundle.min.css",
     "watch": "npm-run-all --parallel watch:*",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "prebuild": "npm run copy:three && npm run copy:webvr-polyfill && npm run copy:webvr-manager && npm run copy:OrbitControls && npm run copy:Detector && npm run copy:stats",
+    "prewatch": "npm run prebuild"
   },
   "engines": {
     "node": "6.5.0"

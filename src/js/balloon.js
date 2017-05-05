@@ -21,7 +21,7 @@ export default class Balloon {
 
   load () {
     this.loader.load(
-      '../../../assets/models/balloon/balloon3.json',
+      'assets/models/balloon/balloon3.json',
       (balloon) => {
         console.log(balloon)
         this.balloon = balloon
