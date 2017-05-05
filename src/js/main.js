@@ -216,23 +216,26 @@ function loop () {
 
   if (vrEffect.isPresenting === true && controlsEnabled === true) {
     updateVRScene()
-    body.position.y += delta * -0.2
-    balloon.fall(delta)
+    if (viveControllers.getMovingPosition() === false) {
+      body.position.y += delta * -0.2
+      balloon.fall(delta)
+    }
   }
 
   if (vrEffect.isPresenting === true && controlsEnabled === false) {
     updateVRScene()
-    body.position.y = 25
-    body.position.x = 25
-    body.position.z = 25
+    body.position.y = 15
+    body.position.x = 15
+    body.position.z = 15
     balloon.resetPosition()
+    // body.position.y += delta * -0.2
+    // balloon.fall(delta)
   }
 
   if (isMovingUp === true || viveControllers.getMovingPosition() === true) {
     balloon.flyHigher(delta)
     body.position.y += delta
   }
-
 
   // Render the scene through the vrManager.
   vrManager.render(scene, camera, delta)
