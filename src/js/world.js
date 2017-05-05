@@ -17,24 +17,42 @@ export default class World {
     this.loader.load(
       'assets/models/island/skyisland3.json',
       ( island ) => {
-        this.scene.add(island)
         for (let i = 0; i < island.children.length; i++) {
+          if (island.children[i].material) {
+            if (island.children[i].material.materials) {
+              island.children[i].material.materials.forEach((mat) => {
+                mat.side = THREE.DoubleSide;
+              })
+            }
+            else {
+              island.children[i].material.side = THREE.DoubleSide;
+            }
+          }
           if (island.children[i].geometry) {
             island.children[i].geometry.computeFlatVertexNormals()
           }
         }
+        this.scene.add(island)
       }
     )
+
     this.loader.load(
       'assets/models/windmill/mill2.json',
       ( windmill ) => {
-        windmill.position.set(-5.5, 0, -4.8)
-        this.scene.add(windmill)
         for (let i = 0; i < windmill.children.length; i++) {
+          if (windmill.children[i].material) {
+            if (windmill.children[i].material.materials) {
+              windmill.children[i].material.materials.forEach((mat) => {
+                mat.side = THREE.DoubleSide;
+              })
+            }
+          }
           if (windmill.children[i].geometry) {
             windmill.children[i].geometry.computeFlatVertexNormals()
           }
         }
+        windmill.position.set(-5.5, 0, -4.8)
+        this.scene.add(windmill)
       }
     )
     this.loader.load(
