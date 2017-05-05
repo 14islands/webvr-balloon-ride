@@ -80,6 +80,7 @@ export default class Controllers {
   }
 
   onTriggerDown( event ) {
+    console.log('event trigger down', event)
     var controller = event.target
     var intersections = this.getIntersections( controller )
     if ( intersections.length > 0 ) {
@@ -88,6 +89,7 @@ export default class Controllers {
   }
 
   onTriggerUp( event ) {
+    console.log('event trigger up')
     this.isMovingUp = false
   }
 
@@ -118,6 +120,7 @@ export default class Controllers {
   }
 
   getMovingPosition () {
+    console.log('ismovingupstatus from controls', this.isMovingUp)
     return this.isMovingUp
   }
 

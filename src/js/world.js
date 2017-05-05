@@ -38,10 +38,10 @@ export default class World {
       }
     )
     this.loader.load(
-      'assets/models/windmill/wings.json',
+      '../../../assets/models/windmill/wings4.json',
       ( wings ) => {
         this.wings = wings
-        this.wings.position.set(-5.5, 0, -4.8)
+        this.wings.position.set(-5.8, 3.5, -4.8)
         this.scene.add(this.wings)
         for (let i = 0; i < this.wings.children.length; i++) {
           if (this.wings.children[i].geometry) {
@@ -52,9 +52,8 @@ export default class World {
     )
   }
 
-
   update (delta, elapsed, t) {
-    // if(this.wings) this.wings.rotation.x += delta
+    if(this.wings) this.wings.rotation.x += delta
   }
 
 }
