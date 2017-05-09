@@ -5,6 +5,7 @@ import Flamingo from './flamingo'
 import Balloon from './balloon'
 import Controllers from './controllers'
 import ParticleSystem from './particle-system'
+import Button from './button'
 
 // load shimmed plugins - access on THREE namespace
 import _OBJLoader from 'OBJLoader'
@@ -37,6 +38,8 @@ let tempMatrix = new THREE.Matrix4()
 let controlsEnabled = false
 
 const updateObjects = []
+
+const button = new Button()
 
 function createScene () {
   HEIGHT = window.innerHeight
@@ -296,6 +299,7 @@ function addEventListeners () {
   window.addEventListener('gamepadconnected', initControllers, false)
   window.addEventListener('gamepaddisconnected', disconnect, false)
   btnFly.addEventListener('mousedown', moveBalloonUp, false)
+  btnFly.addEventListener('touchstart', moveBalloonUp, false)
 }
 
 function initControllers (event) {

@@ -69,5 +69,8 @@
   },
   "browserify-shim": {
     "three": "global:THREE"
+  },
+  "devDependencies": {
+    "gsap": "^1.19.1"
   }
 }
