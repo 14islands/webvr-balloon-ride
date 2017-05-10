@@ -56,7 +56,7 @@ export default class World {
       }
     )
     this.loader.load(
-      '../../../assets/models/windmill/wings4.json',
+      'assets/models/windmill/wings4.json',
       ( wings ) => {
         this.wings = wings
         this.wings.position.set(-5.8, 3.5, -4.8)
