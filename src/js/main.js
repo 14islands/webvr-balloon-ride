@@ -142,47 +142,12 @@ function createLights () {
 }
 
 
-
-
-function createShapes () {
-  let geometries = [
-    new THREE.BoxGeometry( 0.2, 0.2, 0.2 ),
-    new THREE.ConeGeometry( 0.2, 0.2, 64 ),
-    new THREE.CylinderGeometry( 0.2, 0.2, 0.2, 64 ),
-    new THREE.IcosahedronGeometry( 0.2, 3 ),
-    new THREE.TorusGeometry( 0.2, 0.04, 64, 32 )
-  ]
-  for ( let i = 0; i < 50; i ++ ) {
-    let geometry = geometries[ Math.floor( Math.random() * geometries.length ) ]
-    let material = new THREE.MeshStandardMaterial( {
-      color: Math.random() * 0xffffff,
-      roughness: 0.7,
-      metalness: 0.0
-    } )
-    let object = new THREE.Mesh( geometry, material )
-    object.position.x = Math.random() * 4 - 2
-    object.position.y = Math.random() * 2
-    object.position.z = Math.random() * 4 - 2
-    object.rotation.x = Math.random() * 2 * Math.PI
-    object.rotation.y = Math.random() * 2 * Math.PI
-    object.rotation.z = Math.random() * 2 * Math.PI
-    object.scale.setScalar( Math.random() + 0.5 )
-    object.castShadow = true
-    object.receiveShadow = true
-    scene.add( object )
-  }
-}
-
 function createParticles () {
   particleSystem = new ParticleSystem()
   particleSystem.mesh.position.y = -2
   scene.add(particleSystem.mesh)
 }
 
-
-function moveObjectsDown (delta) {
-
-}
 
 function updateDayScene () {
   if (updateDayScene.done) return
@@ -206,7 +171,7 @@ function loop () {
     object.update(delta, elapsed, t)
   }
 
-  particleSystem.update(delta)
+  // particleSystem.update(delta)
 
   body.position.z = 20*Math.sin(t) + 0
   body.position.x = 20*Math.cos(t) + 0
@@ -215,10 +180,12 @@ function loop () {
     updateDayScene()
     body.position.y += delta * -0.2
     balloon.fall(delta)
+    particleSystem.update(delta)
   }
 
   if (vrEffect.isPresenting === true && controlsEnabled === true) {
     updateVRScene()
+    particleSystem.update(delta)
     if (viveControllers.getMovingPosition() === false) {
       body.position.y += delta * -0.2
       balloon.fall(delta)
@@ -227,12 +194,14 @@ function loop () {
 
   if (vrEffect.isPresenting === true && controlsEnabled === false) {
     updateVRScene()
-    body.position.y = 15
-    body.position.x = 15
-    body.position.z = 15
-    balloon.resetPosition()
+    // body.position.y = 15
+    // body.position.x = 15
+    // body.position.z = 15
+    // body.position.y += delta * -0.2
+    // balloon.resetPosition()
     // body.position.y += delta * -0.2
     // balloon.fall(delta)
+    scene.remove(particleSystem.mesh)
   }
 
   if (isMovingUp === true || viveControllers.getMovingPosition() === true) {
@@ -263,7 +232,6 @@ function init () {
 
   //add objects
   createParticles()
-  createShapes()
 
   // // Apply VR headset positional data to camera.
 
