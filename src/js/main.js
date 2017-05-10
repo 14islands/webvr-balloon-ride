@@ -5,6 +5,7 @@ import Flamingo from './flamingo'
 import Balloon from './balloon'
 import Controllers from './controllers'
 import ParticleSystem from './particle-system'
+import Button from './button'
 
 // load shimmed plugins - access on THREE namespace
 import _OBJLoader from 'OBJLoader'
@@ -37,6 +38,8 @@ let tempMatrix = new THREE.Matrix4()
 let controlsEnabled = false
 
 const updateObjects = []
+
+const button = new Button()
 
 function createScene () {
   HEIGHT = window.innerHeight
@@ -288,7 +291,7 @@ function init () {
 
 function addEventListeners () {
   document.addEventListener( 'mousedown', onDocumentMouseDown, false )
-  document.addEventListener( 'mouseup', onDocumentMouseUp, false )
+  document.addEventListener( 'mouseup', stopMovingUp, false )
   // Listen to the screen: if the user resizes it
   // we have to update the camera and the renderer size
   window.addEventListener('resize', handleWindowResize, false)
@@ -296,6 +299,8 @@ function addEventListeners () {
   window.addEventListener('gamepadconnected', initControllers, false)
   window.addEventListener('gamepaddisconnected', disconnect, false)
   btnFly.addEventListener('mousedown', moveBalloonUp, false)
+  btnFly.addEventListener('touchstart', moveBalloonUp, false)
+  btnFly.addEventListener('touchend', stopMovingUp, false)
 }
 
 function initControllers (event) {
@@ -322,7 +327,7 @@ function onDocumentMouseDown (event) {
   }
 }
 
-function onDocumentMouseUp (event) {
+function stopMovingUp (event) {
   event.preventDefault()
   isMovingUp = false
 }

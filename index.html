@@ -11,7 +11,7 @@
 		<meta name="keywords" content="three.js, webgl, webvr, room scale, htc vive, cardboard, daydream, oculus rift, 3d, animation, web development, javascript" />
 		<meta name="author" content="David Lindkvist & Natalia Wojtkowska for 14islands" />
 
-        <link href="https://fonts.googleapis.com/css?family=Karla:700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="build/bundle.min.css" />
 
 
@@ -50,10 +50,12 @@
 
     <!-- three.js 3d library - needs to be global for third party plugins -->
     <script src="build/three.js"></script>
-
     <script src="build/OrbitControls.js"></script>
     <script src="build/Detector.js"></script>
     <script src="build/stats.min.js"></script>
+    <script src="node_modules/three/examples/js/controls/OrbitControls.js"></script>
+    <script src="node_modules/three/examples/js/libs/stats.min.js"></script>
+    <script src="build/SplitText.min.js"></script>
 
     <!-- A polyfill for WebVR using the Device{Motion,Orientation}Event API. -->
     <script src="build/webvr-polyfill.js"></script>
@@ -73,5 +75,6 @@
                 <path d="M0 0h24v24H0z" fill="none"/>
             </svg>
         </a>
+        <span id="js-btn-text" class="btn-text is-inactive">Fly higher</span>
 	</body>
 </html>
