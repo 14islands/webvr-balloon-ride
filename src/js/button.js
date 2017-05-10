@@ -26,7 +26,6 @@ export default class Button {
     this.buttonText.classList.remove('is-inactive')
     if (this.canRunAnimation = true) {
       this.canRunAnimation = false
-      console.log(this.canRunAnimation)
       TweenMax.to(this.buttonText, 0.2, {
         autoAlpha: 1
       })
