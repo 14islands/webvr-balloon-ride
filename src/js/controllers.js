@@ -120,7 +120,6 @@ export default class Controllers {
   }
 
   getMovingPosition () {
-    console.log('ismovingupstatus from controls', this.isMovingUp)
     return this.isMovingUp
   }
 

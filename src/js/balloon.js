@@ -23,7 +23,6 @@ export default class Balloon {
     this.loader.load(
       'assets/models/balloon/balloon3.json',
       (balloon) => {
-        console.log(balloon)
         this.balloon = balloon
         this.balloon.children[0].geometry.computeFlatVertexNormals()
         this.balloon.position.set(0, 5, 0)
