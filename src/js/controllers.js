@@ -26,6 +26,8 @@ export default class Controllers {
 
     this.loadViveControllerModels = this.loadViveControllerModels.bind(this)
     this.onTriggerDown = this.onTriggerDown.bind(this)
+    this.onTriggerUp = this.onTriggerUp.bind(this)
+    this.isFlyingUp = this.isFlyingUp.bind(this)
 
     // this.init()
 
@@ -80,7 +82,6 @@ export default class Controllers {
   }
 
   onTriggerDown( event ) {
-    console.log('event trigger down', event)
     var controller = event.target
     var intersections = this.getIntersections( controller )
     if ( intersections.length > 0 ) {
@@ -88,8 +89,11 @@ export default class Controllers {
     }
   }
 
+  isFlyingUp () {
+    return this.isMovingUp
+  }
+
   onTriggerUp( event ) {
-    console.log('event trigger up')
     this.isMovingUp = false
   }
 
@@ -117,10 +121,6 @@ export default class Controllers {
       var object = this.intersected.pop()
       object.material.emissive.r = 0
     }
-  }
-
-  getMovingPosition () {
-    return this.isMovingUp
   }
 
 }

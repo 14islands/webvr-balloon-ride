@@ -33,6 +33,7 @@ let mouse = new THREE.Vector2()
 let objects = []
 let intersected = []
 let isMovingUp = false
+let isGoingUp
 let btnFly
 let tempMatrix = new THREE.Matrix4()
 let controlsEnabled = false
@@ -181,30 +182,32 @@ function loop () {
     body.position.y += delta * -0.2
     balloon.fall(delta)
     particleSystem.update(delta)
+    button.show()
   }
 
   if (vrEffect.isPresenting === true && controlsEnabled === true) {
     updateVRScene()
     particleSystem.update(delta)
-    if (viveControllers.getMovingPosition() === false) {
-      body.position.y += delta * -0.2
+    button.hide()
+
+    if (viveControllers.isFlyingUp() === true) {
+      isMovingUp = true
+    } else if (viveControllers.isFlyingUp() === false) {
+      isMovingUp = false
       balloon.fall(delta)
+      body.position.y += delta * -0.2
     }
+
   }
 
   if (vrEffect.isPresenting === true && controlsEnabled === false) {
     updateVRScene()
-    // body.position.y = 15
-    // body.position.x = 15
-    // body.position.z = 15
-    // body.position.y += delta * -0.2
-    // balloon.resetPosition()
-    // body.position.y += delta * -0.2
-    // balloon.fall(delta)
+    button.hide()
     scene.remove(particleSystem.mesh)
   }
 
-  if (isMovingUp === true || viveControllers.getMovingPosition() === true) {
+
+  if (isMovingUp === true) {
     balloon.flyHigher(delta)
     body.position.y += delta
   }
@@ -260,7 +263,7 @@ function init () {
 function addEventListeners () {
   document.addEventListener( 'mousedown', onDocumentMouseDown, false )
   document.addEventListener( 'mouseup', stopMovingUp, false )
-  // Listen to the screen: if the user resizes it
+  // Listen to the screen: if the stuser resizes it
   // we have to update the camera and the renderer size
   window.addEventListener('resize', handleWindowResize, false)
   window.addEventListener('vrdisplaypresentchange', handleWindowResize, true)
