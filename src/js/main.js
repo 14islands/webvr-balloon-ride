@@ -181,11 +181,13 @@ function loop () {
     body.position.y += delta * -0.2
     balloon.fall(delta)
     particleSystem.update(delta)
+    button.show()
   }
 
   if (vrEffect.isPresenting === true && controlsEnabled === true) {
     updateVRScene()
     particleSystem.update(delta)
+    button.hide()
     if (viveControllers.getMovingPosition() === false) {
       body.position.y += delta * -0.2
       balloon.fall(delta)
@@ -194,13 +196,7 @@ function loop () {
 
   if (vrEffect.isPresenting === true && controlsEnabled === false) {
     updateVRScene()
-    // body.position.y = 15
-    // body.position.x = 15
-    // body.position.z = 15
-    // body.position.y += delta * -0.2
-    // balloon.resetPosition()
-    // body.position.y += delta * -0.2
-    // balloon.fall(delta)
+    button.hide()
     scene.remove(particleSystem.mesh)
   }
 

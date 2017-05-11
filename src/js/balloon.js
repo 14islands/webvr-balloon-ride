@@ -81,15 +81,6 @@ export default class Balloon {
     }
   }
 
-  resetPosition () {
-    this.balloon.position.set(0, 5, 0)
-    this.rope.position.set(0, 7, 0)
-    this.fire.position.set(-1, 10, 0)
-    for (let object of this.flyingObjects) {
-      object.position.y = 10
-    }
-  }
-
   remove () {
     for (let object of this.flyingObjects) {
       scene.remove(object)
