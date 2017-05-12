@@ -38,7 +38,9 @@ export default class Fire extends THREE.Object3D {
     var textureLoader = new THREE.TextureLoader()
     textureLoader.load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/126747/snowflake_16x16.png', (texture) => {
       this.texture = texture
-      this.system.material.uniforms.texture.value = texture
+      if (this.system) {
+        this.system.material.uniforms.texture.value = texture
+      }
     })
   }
 
@@ -102,7 +104,7 @@ export default class Fire extends THREE.Object3D {
         sparkStartSize: { type: 'f', value: this.opts.sparkStartSize },
         sparkEndSize: { type: 'f', value: this.opts.sparkEndSize },
         opacity: { type: 'f', value: this.opts.opacity },
-        texture: { type: 't', value: null }
+        texture: { type: 't', value: this.texture }
       },
       transparent: true,
       // depthWrite: false,

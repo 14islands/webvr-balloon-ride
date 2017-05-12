@@ -253,16 +253,27 @@ function init () {
 
   addEventListeners()
 
+  // CHECK IF GAMEPADS ALREADY CONNECTED - no event will fire
+  if (navigator.getGamepads) {
+    let hasController = false
+    const gamepads = navigator.getGamepads()
+    for (let i = 0; i < gamepads.length; i++) {
+      if (gamepads[i]) hasController = true
+    }
+    if (hasController) initControllers()
+    console.info('hasController?', hasController)
+  } else {
+    console.warn('no gamepad api')
+  }
 
   // For high end VR devices like Vive and Oculus, take into account the stage
   // parameters provided.
   setupStage()
-
 }
 
 function addEventListeners () {
-  document.addEventListener( 'mousedown', onDocumentMouseDown, false )
-  document.addEventListener( 'mouseup', stopMovingUp, false )
+  document.addEventListener('mousedown', onDocumentMouseDown, false)
+  document.addEventListener('mouseup', stopMovingUp, false)
   // Listen to the screen: if the stuser resizes it
   // we have to update the camera and the renderer size
   window.addEventListener('resize', handleWindowResize, false)
