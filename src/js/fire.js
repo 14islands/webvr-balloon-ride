@@ -1,15 +1,23 @@
 import * as THREE from 'three'
+import * as TweenMax from 'gsap'
+
+const START_SIZE = 0.5
+const LARGE_SIZE = 2
 
 export default class Fire extends THREE.Object3D {
   constructor () {
     super()
     this.numParticles = 1000
+    this.isLarge = false
+    this.tweenedScale = START_SIZE
+    this.scale.setScalar(this.tweenedScale)
+    this.particleSize = this.getSmallSize()
 
     this.opts = {
       sparkLifecycle: 0.7,
       sparkStartSize: 10,
       sparkEndSize: 20,
-      sparkDistanceScale: 1.5*1000/window.innerHeight,
+      sparkDistanceScale: this.getSize(),
 
       flameMinHeight: 0.02,
       flameMaxHeight: 0.25,
@@ -32,6 +40,41 @@ export default class Fire extends THREE.Object3D {
       this.texture = texture
       this.system.material.uniforms.texture.value = texture
     })
+  }
+
+  setLarge (large) {
+    if (!this.isLarge && large) {
+      TweenMax.killTweensOf(this)
+      TweenMax.to(this, 1, {
+        tweenedScale: LARGE_SIZE,
+        particleSize: this.getLargeSize(),
+        onUpdate: x => {
+          this.scale.setScalar(this.tweenedScale)
+        }
+      })
+    } else if (this.isLarge && !large) {
+      TweenMax.killTweensOf(this)
+      TweenMax.to(this, 1, {
+        tweenedScale: START_SIZE,
+        particleSize: this.getSmallSize(),
+        onUpdate: x => {
+          this.scale.setScalar(this.tweenedScale)
+        }
+      })
+    }
+    this.isLarge = large
+  }
+
+  getSize () {
+    return this.particleSize
+  }
+
+  getSmallSize () {
+    return window.innerHeight * 0.002 * window.devicePixelRatio
+  }
+
+  getLargeSize () {
+    return window.innerHeight * 0.005 * window.devicePixelRatio
   }
 
   init () {
@@ -166,15 +209,20 @@ export default class Fire extends THREE.Object3D {
     systemGeometry.addAttribute('particleIndex', new THREE.BufferAttribute(particleIndex, 1))
 
     systemGeometry.computeBoundingSphere()
+    systemGeometry.computeBoundingBox()
     this.system = new THREE.Points(systemGeometry, systemMaterial)
-
+    // this.system.position.x = 0.1
+    // this.system.position.z = -0.1
+    // this.geometry.applyMatrix( new THREE.Matrix4().setTranslation( 0, 10, 0 ) );
     this.add(this.system)
 
     this.system.renderOrder = 2
   }
 
   update (delta, elapsed) {
+    if (!this.system) return
     this.system.material.uniforms.elapsedTime.value = elapsed
+    this.system.material.uniforms.sparkDistanceScale.value = this.getSize()
 
     var up = new THREE.Vector3()
     up.copy(this.up).applyQuaternion(this.getWorldQuaternion().inverse())

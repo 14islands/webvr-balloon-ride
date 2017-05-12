@@ -28,10 +28,11 @@ export default class Balloon {
         this.balloon.position.set(0, 5, 0)
         this.scene.add(this.balloon)
         this.flyingObjects.push(this.balloon)
+
+        this.createRope()
+        this.createFire()
       }
     )
-    this.createRope()
-    this.createFire()
   }
 
   createRope () {
@@ -58,13 +59,15 @@ export default class Balloon {
 
   createFire () {
     this.fire.init()
-    this.fire.position.set(-1, 7, 0)
-    this.scene.add(this.fire)
-    this.flyingObjects.push(this.fire)
+    this.fire.position.set(0.07, 2.3, -0.05)
+    this.balloon.add(this.fire)
+    // this.fire.position.set(0, 7.4, 0)
+    // this.scene.add(this.fire)
+    // this.flyingObjects.push(this.fire)
   }
 
   update (delta, elapsed, t) {
-    this.fire.update(delta, elapsed)
+    this.fire && this.fire.update(delta, elapsed)
     for (let object of this.flyingObjects) {
       object.position.z = 20*Math.sin(t) + 0
       object.position.x = 20*Math.cos(t) + 0
@@ -75,7 +78,8 @@ export default class Balloon {
   }
 
   flyHigher (delta) {
-    this.fire.scale.setScalar(2)
+    // this.fire.scale.setScalar(2)
+    this.fire.setLarge(true)
     for (let object of this.flyingObjects) {
       object.position.y += delta
     }
@@ -88,7 +92,8 @@ export default class Balloon {
   }
 
   fall (delta) {
-    this.fire.scale.setScalar(1)
+    // this.fire.scale.setScalar(1)
+    this.fire.setLarge(false)
     for (let object of this.flyingObjects) {
       object.position.y += delta * -0.2
     }
